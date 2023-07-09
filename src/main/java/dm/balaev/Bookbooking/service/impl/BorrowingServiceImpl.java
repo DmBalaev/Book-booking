@@ -32,7 +32,7 @@ public class BorrowingServiceImpl implements BorrowingService {
         Account account = accountRepository.findByEmail(email)
                 .orElseThrow(()-> new UserNotFoundException("User not found with email: " + email));
         Book book = bookRepository.findById(bookId)
-                .orElseThrow(()-> new NotFoundBook("Book for update not found with id: " + bookId));
+                .orElseThrow(()-> new BookNotFoundException("Book for update not found with id: " + bookId));
 
         if (book.getCopiesAvailable() > 0){
             Borrowing borrowing = Borrowing.builder()

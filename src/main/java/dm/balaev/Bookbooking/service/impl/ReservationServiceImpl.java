@@ -1,7 +1,7 @@
 package dm.balaev.Bookbooking.service.impl;
 
-import dm.balaev.Bookbooking.exceptions.NotFoundBook;
-import dm.balaev.Bookbooking.exceptions.ResourceNotFoundException;
+import dm.balaev.Bookbooking.exceptions.BookNotFoundException;
+import dm.balaev.Bookbooking.exceptions.ReservationNotFoundException;
 import dm.balaev.Bookbooking.exceptions.UserNotFoundException;
 import dm.balaev.Bookbooking.payload.response.ApiResponse;
 import dm.balaev.Bookbooking.persistance.entity.Account;
@@ -28,7 +28,7 @@ public class ReservationServiceImpl implements ReservationService {
         Account account = accountRepository.findByEmail(email)
                 .orElseThrow(()-> new UserNotFoundException("User not found with email: " + email));
         Book book = bookRepository.findById(bookId)
-                .orElseThrow(()-> new NotFoundBook("Book for update not found with id: " + bookId));
+                .orElseThrow(()-> new BookNotFoundException("Book for update not found with id: " + bookId));
 
         Reservation reservation = Reservation.builder()
                 .account(account)
@@ -42,7 +42,7 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public ApiResponse cancelBookReservation(Long id) {
         Reservation reservation = reservationRepository.findById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("Reservation not found with id: " + id));
+                .orElseThrow(()-> new ReservationNotFoundException("Reservation not found with id: " + id));
 
         reservationRepository.delete(reservation);
         return new ApiResponse("Reservation deleted");

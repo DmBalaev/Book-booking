@@ -1,6 +1,6 @@
 package dm.balaev.Bookbooking.service.impl;
 
-import dm.balaev.Bookbooking.exceptions.NotFoundBook;
+import dm.balaev.Bookbooking.exceptions.BookNotFoundException;
 import dm.balaev.Bookbooking.payload.response.ApiResponse;
 import dm.balaev.Bookbooking.persistance.entity.Book;
 import dm.balaev.Bookbooking.persistance.repository.BookRepository;
@@ -17,13 +17,14 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book addBook(Book book) {
+        //TODO: добавить проверку на дубликаты
         return bookRepository.save(book);
     }
 
     @Override
     public Book updateBook(Long id, Book book) {
         Book update = bookRepository.findById(id)
-                .orElseThrow(()-> new NotFoundBook("Book for update not found with id " + id));
+                .orElseThrow(()-> new BookNotFoundException("Book for update not found with id " + id));
         update.setAuthor(update.getAuthor());
         update.setTitle(update.getTitle());
         update.setCopiesAvailable(update.getCopiesAvailable());
@@ -44,7 +45,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book findByName(String name) {
         return bookRepository.findByTitle(name)
-                .orElseThrow(()-> new NotFoundBook("Book for update not found with name " + name));
+                .orElseThrow(()-> new BookNotFoundException("Book for update not found with name " + name));
     }
 
     @Override
