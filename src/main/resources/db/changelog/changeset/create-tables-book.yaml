@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: create book tables
+      author: dm
+      changes:
+        - createTable:
+            tableName: book
+            columns:
+              - column:
+                  name: id
+                  type: SERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: author
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: copies_available
+                  type: INTEGER
+                  constraints:
+                    nullable: false

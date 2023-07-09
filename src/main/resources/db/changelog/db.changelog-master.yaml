@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/changeset/create-tables-account.yaml
+  - include:
+      file: db/changelog/changeset/create-tables-book.yaml
+  - include:
+      file: db/changelog/changeset/create-tables-borrowing.yaml
+  - include:
+      file: db/changelog/changeset/create-tables-reservation.yaml
+  - include:
+      file: db/changelog/changeset/insert-books.yaml

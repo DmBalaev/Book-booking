@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: create book tables
+      author: dm
+      changes:
+        - createTable:
+            tableName: account
+            columns:
+              - column:
+                  name: id
+                  type: SERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+                  constraints:
+                    unique: true
+                    nullable: false
