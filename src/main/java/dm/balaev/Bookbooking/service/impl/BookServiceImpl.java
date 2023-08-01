@@ -1,6 +1,7 @@
 package dm.balaev.Bookbooking.service.impl;
 
 import dm.balaev.Bookbooking.exceptions.BookNotFoundException;
+import dm.balaev.Bookbooking.exceptions.DuplicateException;
 import dm.balaev.Bookbooking.payload.response.ApiResponse;
 import dm.balaev.Bookbooking.persistance.entity.Book;
 import dm.balaev.Bookbooking.persistance.repository.BookRepository;
@@ -17,7 +18,10 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book addBook(Book book) {
-        //TODO: добавить проверку на дубликаты
+        if (bookRepository.existsByTitleAndAuthor(book.getTitle(), book.getAuthor())){
+            throw new DuplicateException("Book with title: '%s' and author: '%s' already exists."
+                    .formatted(book.getTitle(), book.getAuthor()));
+        }
         return bookRepository.save(book);
     }
 
