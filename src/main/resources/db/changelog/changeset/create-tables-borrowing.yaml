@@ -1,88 +1,53 @@
 databaseChangeLog:
   - changeSet:
-      id: insert 6 books
+      id: create borrowing table
       author: dm
       changes:
-        - insert:
-            tableName: books
+        - createTable:
+            tableName: borrowing
             columns:
               - column:
-                  name: title
-                  value: "To Kill a Mockingbird"
+                  name: id
+                  type: SERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
               - column:
-                  name: author
-                  value: "Harper Lee"
+                  name: user_id
+                  type: INTEGER
+                  constraints:
+                    nullable: false
               - column:
-                  name: copies_available
-                  value: 5
-            rows: 1
-
-        - insert:
-            tableName: books
-            columns:
+                  name: book_id
+                  type: INTEGER
+                  constraints:
+                    nullable: false
               - column:
-                  name: title
-                  value: "1984"
+                  name: borrowed_date
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
               - column:
-                  name: author
-                  value: "George Orwell"
+                  name: return_date
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
               - column:
-                  name: copies_available
-                  value: 3
-            rows: 1
-
-        - insert:
-            tableName: books
-            columns:
+                  name: returned
+                  type: boolean
+                  defaultValue: false
               - column:
-                  name: title
-                  value: "Pride and Prejudice"
-              - column:
-                  name: author
-                  value: "Jane Austen"
-              - column:
-                  name: copies_available
-                  value: 2
-            rows: 1
-
-        - insert:
-            tableName: books
-            columns:
-              - column:
-                  name: title
-                  value: "The Great Gatsby"
-              - column:
-                  name: author
-                  value: "F. Scott Fitzgerald"
-              - column:
-                  name: copies_available
-                  value: 4
-            rows: 1
-
-        - insert:
-            tableName: books
-            columns:
-              - column:
-                  name: title
-                  value: "To the Lighthouse"
-              - column:
-                  name: author
-                  value: "Virginia Woolf"
-              - column:
-                  name: copies_available
-                  value: 2
-            rows: 1
-
-        - insert:
-            tableName: books
-            columns:
-              - column:
-                  name: title
-                  value: "The Catcher in the Rye"
-              - column:
-                  name: author
-                  value: "J.D. Salinger"
-              - column:
-                  name: copies_available
-                  value: 3
-            rows: 1
+                  name: extended
+                  type: boolean
+                  defaultValue: false
+            constraints:
+              - foreignKey:
+                  baseTableName: borrowing
+                  baseColumnNames: user_id
+                  referencedTableName: account
+                  referencedColumnNames: id
+              - foreignKey:
+                  baseTableName: borrowing
+                  baseColumnNames: book_id
+                  referencedTableName: book
+                  referencedColumnNames: id

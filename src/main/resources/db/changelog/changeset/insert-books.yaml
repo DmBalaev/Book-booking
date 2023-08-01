@@ -1,23 +1,88 @@
 databaseChangeLog:
   - changeSet:
-      id: create book tables
+      id: insert 6 books
       author: dm
       changes:
-        - createTable:
-            tableName: account
+        - insert:
+            tableName: books
             columns:
               - column:
-                  name: id
-                  type: SERIAL
-                  constraints:
-                    primaryKey: true
-                    nullable: false
+                  name: title
+                  value: "To Kill a Mockingbird"
               - column:
-                  name: name
-                  type: VARCHAR(255)
+                  name: author
+                  value: "Harper Lee"
               - column:
-                  name: email
-                  type: VARCHAR(255)
-                  constraints:
-                    unique: true
-                    nullable: false
+                  name: copies_available
+                  value: 5
+            rows: 1
+
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: title
+                  value: "1984"
+              - column:
+                  name: author
+                  value: "George Orwell"
+              - column:
+                  name: copies_available
+                  value: 3
+            rows: 1
+
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: title
+                  value: "Pride and Prejudice"
+              - column:
+                  name: author
+                  value: "Jane Austen"
+              - column:
+                  name: copies_available
+                  value: 2
+            rows: 1
+
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: title
+                  value: "The Great Gatsby"
+              - column:
+                  name: author
+                  value: "F. Scott Fitzgerald"
+              - column:
+                  name: copies_available
+                  value: 4
+            rows: 1
+
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: title
+                  value: "To the Lighthouse"
+              - column:
+                  name: author
+                  value: "Virginia Woolf"
+              - column:
+                  name: copies_available
+                  value: 2
+            rows: 1
+
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: title
+                  value: "The Catcher in the Rye"
+              - column:
+                  name: author
+                  value: "J.D. Salinger"
+              - column:
+                  name: copies_available
+                  value: 3
+            rows: 1
