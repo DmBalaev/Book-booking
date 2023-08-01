@@ -30,9 +30,9 @@ public class BorrowingServiceImpl implements BorrowingService {
     @Override
     public Borrowing borrowBook(String email, Long bookId, LocalDate returnDate) {
         Account account = accountRepository.findByEmail(email)
-                .orElseThrow(()-> new UserNotFoundException("User not found with email: " + email));
+                .orElseThrow(()-> new ResourceNotFound("User not found with email: " + email));
         Book book = bookRepository.findById(bookId)
-                .orElseThrow(()-> new BookNotFoundException("Book for update not found with id: " + bookId));
+                .orElseThrow(()-> new ResourceNotFound("Book for update not found with id: " + bookId));
 
         if (book.getCopiesAvailable() > 0){
             Borrowing borrowing = Borrowing.builder()
@@ -54,7 +54,7 @@ public class BorrowingServiceImpl implements BorrowingService {
     @Override
     public Borrowing extendBorrowing(Long id, LocalDate date) {
         Borrowing borrowing = borrowingRepository.findById(id)
-                .orElseThrow(() -> new BorrowingNotFoundException("Borrowing not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFound("Borrowing not found with id: " + id));
         if (borrowing.isExtended()){
             throw new BorrowingAlreadyExtendedException("Borrowing already extended");
         }
@@ -68,7 +68,7 @@ public class BorrowingServiceImpl implements BorrowingService {
     @Override
     public ApiResponse returnBook(Long id) {
         Borrowing borrowing = borrowingRepository.findById(id)
-                .orElseThrow(() -> new BorrowingNotFoundException("Borrowing not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFound("Borrowing not found with id: " + id));
 
         Book book = borrowing.getBook();
         book.setCopiesAvailable(book.getCopiesAvailable() + 1);

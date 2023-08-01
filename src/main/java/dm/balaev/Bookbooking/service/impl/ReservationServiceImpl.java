@@ -1,8 +1,6 @@
 package dm.balaev.Bookbooking.service.impl;
 
-import dm.balaev.Bookbooking.exceptions.BookNotFoundException;
-import dm.balaev.Bookbooking.exceptions.ReservationNotFoundException;
-import dm.balaev.Bookbooking.exceptions.UserNotFoundException;
+import dm.balaev.Bookbooking.exceptions.ResourceNotFound;
 import dm.balaev.Bookbooking.payload.response.ApiResponse;
 import dm.balaev.Bookbooking.persistance.entity.Account;
 import dm.balaev.Bookbooking.persistance.entity.Book;
@@ -26,9 +24,9 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public Reservation reserveBook(Long bookId, String email) {
         Account account = accountRepository.findByEmail(email)
-                .orElseThrow(()-> new UserNotFoundException("User not found with email: " + email));
+                .orElseThrow(()-> new ResourceNotFound("User not found with email: " + email));
         Book book = bookRepository.findById(bookId)
-                .orElseThrow(()-> new BookNotFoundException("Book for update not found with id: " + bookId));
+                .orElseThrow(()-> new ResourceNotFound("Book for update not found with id: " + bookId));
 
         Reservation reservation = Reservation.builder()
                 .account(account)
@@ -42,7 +40,7 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public ApiResponse cancelBookReservation(Long id) {
         Reservation reservation = reservationRepository.findById(id)
-                .orElseThrow(()-> new ReservationNotFoundException("Reservation not found with id: " + id));
+                .orElseThrow(()-> new ResourceNotFound("Reservation not found with id: " + id));
 
         reservationRepository.delete(reservation);
         return new ApiResponse("Reservation deleted");
@@ -56,7 +54,7 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public List<Reservation> reservationByAccount(String email) {
         Account account = accountRepository.findByEmail(email)
-                .orElseThrow(()-> new UserNotFoundException("User not found with email: " + email));
+                .orElseThrow(()-> new ResourceNotFound("User not found with email: " + email));
         //TODO: make method
         return reservationRepository.findAll();
     }

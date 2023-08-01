@@ -4,7 +4,7 @@ databaseChangeLog:
       author: dm
       changes:
         - createTable:
-            tableName: book
+            tableName: books
             columns:
               - column:
                   name: id

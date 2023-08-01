@@ -1,7 +1,7 @@
 spring:
   redis:
     host: localhost
-    port: 6379
+    port: 1313
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.yaml
