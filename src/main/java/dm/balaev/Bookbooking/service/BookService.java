@@ -12,5 +12,4 @@ public interface BookService {
     List<Book> findByAuthor(String author);
     Book findByName(String name);
     ApiResponse deleteBook(Long id);
-
 }
