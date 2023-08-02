@@ -3,11 +3,13 @@ package dm.balaev.Bookbooking.persistance.entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Entity
+@Data
 @Builder
 @Table(name = "reservation")
 @NoArgsConstructor
