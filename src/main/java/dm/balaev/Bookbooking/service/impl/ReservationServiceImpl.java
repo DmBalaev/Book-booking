@@ -10,6 +10,8 @@ import dm.balaev.Bookbooking.persistance.repository.BookRepository;
 import dm.balaev.Bookbooking.persistance.repository.ReservationRepository;
 import dm.balaev.Bookbooking.service.ReservationService;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -21,7 +23,9 @@ public class ReservationServiceImpl implements ReservationService {
     private final ReservationRepository reservationRepository;
     private final BookRepository bookRepository;
     private final AccountRepository accountRepository;
+
     @Override
+    @CacheEvict(value = "allReservations")
     public Reservation reserveBook(Long bookId, String email) {
         Account account = accountRepository.findByEmail(email)
                 .orElseThrow(()-> new ResourceNotFound("User not found with email: " + email));
@@ -38,6 +42,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    @CacheEvict(value = "allReservations")
     public ApiResponse cancelBookReservation(Long id) {
         Reservation reservation = reservationRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFound("Reservation not found with id: " + id));
@@ -47,15 +52,16 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    @Cacheable("allReservations")
     public List<Reservation> allReservations() {
         return reservationRepository.findAll();
     }
 
     @Override
+    @Cacheable("reservationsByAccount")
     public List<Reservation> reservationByAccount(String email) {
         Account account = accountRepository.findByEmail(email)
                 .orElseThrow(()-> new ResourceNotFound("User not found with email: " + email));
-        //TODO: make method
-        return reservationRepository.findAll();
+        return reservationRepository.findByAccount(account);
     }
 }
