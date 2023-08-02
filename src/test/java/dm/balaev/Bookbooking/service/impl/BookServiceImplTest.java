@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.data.domain.*;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
@@ -85,19 +86,23 @@ class BookServiceImplTest {
         books.add(new Book(1L, "Book 1", "Author 1", 5));
         books.add(new Book(2L, "Book 2", "Author 2", 3));
 
-        when(bookRepository.findAll()).thenReturn(books);
+        when(bookRepository.findByIdLessThanOrderByIdDesc(anyLong(), any(Pageable.class)))
+                .thenReturn(books);
 
-        List<Book> result = bookService.getAllBook();
+        int page = 0;
+        int pageSize = 10;
+        Long cursorId = 3L;
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+        Pageable pageable = PageRequest.of(page, pageSize, sort);
 
-        verify(bookRepository, times(1)).findAll();
+        List<Book> result = bookService.getAllBook(pageable, cursorId);
 
         assertEquals(2, result.size());
-        assertEquals("Book 1", result.get(0).getTitle());
-        assertEquals("Author 1", result.get(0).getAuthor());
-        assertEquals(5, result.get(0).getCopiesAvailable());
-        assertEquals("Book 2", result.get(1).getTitle());
-        assertEquals("Author 2", result.get(1).getAuthor());
-        assertEquals(3, result.get(1).getCopiesAvailable());
+        assertEquals(books.get(0), result.get(0));
+        assertEquals(books.get(1), result.get(1));
+
+        verify(bookRepository, times(1)).findByIdLessThanOrderByIdDesc(cursorId, pageable);
+        verify(bookRepository, times(1)).findByIdLessThanOrderByIdDesc(cursorId, pageable);
     }
 
     @Test

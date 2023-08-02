@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,8 +45,11 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Cacheable("books")
-    public List<Book> getAllBook() {
-        return bookRepository.findAll();
+    public List<Book> getAllBook(Pageable pageable, Long cursorId) {
+        if (cursorId == null) {
+            cursorId = Long.MAX_VALUE;
+        }
+        return bookRepository.findByIdLessThanOrderByIdDesc(cursorId, pageable);
     }
 
     @Override

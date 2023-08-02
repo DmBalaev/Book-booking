@@ -5,6 +5,8 @@ import dm.balaev.Bookbooking.persistance.entity.Book;
 import dm.balaev.Bookbooking.service.BookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,9 +39,11 @@ public class BookController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Book>> getAllBooks() {
+    public ResponseEntity<List<Book>> getAllBooks(@RequestParam(required = false) Long cursorId,
+                                                  @RequestParam(defaultValue = "20") int size) {
         log.info("Received request to fetch all books.");
-        List<Book> books = bookService.getAllBook();
+        Pageable pageable = PageRequest.of(0, size);
+        List<Book> books = bookService.getAllBook(pageable, cursorId);
         log.info("Fetched {} books.", books.size());
 
         return ResponseEntity.ok(books);
