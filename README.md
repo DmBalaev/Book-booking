@@ -1,13 +1,29 @@
 # Book-booking
 
 ----
-## Содержание
-- [Build and Run](#Running with Docker)
-  - [Running with Docker](#Running with Docker)
-  - [Running without Docker](#Running without Docker)
+## Content
+
+- [Technologies](#technologies)
+- [Build and Run](#docker)
+  - [Running with Docker](#docker)
+  - [Running without Docker](#without_docker)
+  - [Configuring Email Notifications](#configuring)
+  - 
+  
+<a name="technologies"></a>
+## Technologies
+
+- Spring Boot 
+- Spring Data JPA
+- Spring Cache 
+- Spring Data Redis 
+- Spring Mail 
+- Liquibase
+- PostgreSQL
+- Spring Security 
 
 
-
+<a name="docker"></a>
 ## Running with Docker
 Before using the Docker configuration files, ensure that you have the following software installed on your machine:
 
@@ -35,6 +51,7 @@ To use the Docker configuration files, follow the steps below:
    ```
     The -d flag runs the containers in the background (detached mode).
 
+<a name="without_docker"></a>
 ## Running without Docker
 This section provides instructions for running the Project Name project without Docker. You may choose to 
 run the project without Docker if you prefer to set up the environment manually or if Docker is not available on your system.
@@ -86,3 +103,15 @@ or any other relevant settings.
    ```
    The application should start, and you can access it in your web browser at http://localhost:8080
 
+<a name="configuring"></a>
+## Configuring Email Notifications
+
+```yaml
+ spring:
+    mail:
+      host: smtp.gmail.com
+      port: 587
+      username: some@gmail.com
+      password: "pass"
+      test-connection: true
+   ```
