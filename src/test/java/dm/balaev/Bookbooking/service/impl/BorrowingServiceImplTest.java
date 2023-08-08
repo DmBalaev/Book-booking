@@ -55,8 +55,6 @@ class BorrowingServiceImplTest {
                 .name("User")
                 .email("user@example.com")
                 .build();
-
-        LocalDate newReturnDate = LocalDate.now().plusDays(7);
     }
 
     @Test
