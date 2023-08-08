@@ -19,7 +19,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class ReservationServiceImpl implements ReservationService {
+public class ReservationServiceImpl implements ReservationService{
     private final ReservationRepository reservationRepository;
     private final BookRepository bookRepository;
     private final AccountRepository accountRepository;
@@ -63,5 +63,9 @@ public class ReservationServiceImpl implements ReservationService {
         Account account = accountRepository.findByEmail(email)
                 .orElseThrow(()-> new ResourceNotFound("User not found with email: " + email));
         return reservationRepository.findByAccount(account);
+    }
+
+    public List<Reservation> getAvailableBookedBooks(){
+        return reservationRepository.findReservationsForAvailableBooks();
     }
 }

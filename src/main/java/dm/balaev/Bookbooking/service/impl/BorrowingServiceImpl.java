@@ -5,6 +5,7 @@ import dm.balaev.Bookbooking.payload.response.ApiResponse;
 import dm.balaev.Bookbooking.persistance.entity.Account;
 import dm.balaev.Bookbooking.persistance.entity.Book;
 import dm.balaev.Bookbooking.persistance.entity.Borrowing;
+import dm.balaev.Bookbooking.persistance.entity.Reservation;
 import dm.balaev.Bookbooking.persistance.repository.AccountRepository;
 import dm.balaev.Bookbooking.persistance.repository.BookRepository;
 import dm.balaev.Bookbooking.persistance.repository.BorrowingRepository;
@@ -78,5 +79,13 @@ public class BorrowingServiceImpl implements BorrowingService {
         borrowingRepository.save(borrowing);
 
         return new ApiResponse("book returned");
+    }
+
+    @Override
+    public List<Borrowing> getExpiringBorrowing() {
+        LocalDate today = LocalDate.now();
+        LocalDate threeDays = today.plusDays(3);
+
+        return borrowingRepository.findByReturnDateBetween(today, threeDays);
     }
 }

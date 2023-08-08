@@ -10,4 +10,5 @@ public interface ReservationService {
     ApiResponse cancelBookReservation(Long id);
     List<Reservation> allReservations();
     List<Reservation> reservationByAccount(String email);
+    List<Reservation> getAvailableBookedBooks();
 }
