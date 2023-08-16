@@ -3,7 +3,7 @@ package dm.balaev.Bookbooking.service.impl;
 import dm.balaev.Bookbooking.exceptions.BookNotAvailableException;
 import dm.balaev.Bookbooking.exceptions.BorrowingAlreadyExtendedException;
 import dm.balaev.Bookbooking.exceptions.ResourceNotFound;
-import dm.balaev.Bookbooking.payload.response.ApiResponse;
+import dm.balaev.Bookbooking.payload.response.ApplicationResponse;
 import dm.balaev.Bookbooking.persistance.entity.Account;
 import dm.balaev.Bookbooking.persistance.entity.Book;
 import dm.balaev.Bookbooking.persistance.entity.Borrowing;
@@ -186,7 +186,7 @@ class BorrowingServiceImplTest {
         when(borrowingRepository.findById(borrowingId)).thenReturn(Optional.of(borrowing));
         when(borrowingRepository.save(any(Borrowing.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        ApiResponse result = borrowingService.returnBook(borrowingId);
+        ApplicationResponse result = borrowingService.returnBook(borrowingId);
 
         verify(borrowingRepository).findById(borrowingId);
         verify(borrowingRepository).save(any(Borrowing.class));

@@ -1,6 +1,6 @@
 package dm.balaev.Bookbooking.service;
 
-import dm.balaev.Bookbooking.payload.response.ApiResponse;
+import dm.balaev.Bookbooking.payload.response.ApplicationResponse;
 import dm.balaev.Bookbooking.persistance.entity.Book;
 import org.springframework.data.domain.Pageable;
 
@@ -12,5 +12,5 @@ public interface BookService {
     List<Book> getAllBook(Pageable pageable, Long cursorId);
     List<Book> findByAuthor(String author);
     Book findByName(String name);
-    ApiResponse deleteBook(Long id);
+    ApplicationResponse deleteBook(Long id);
 }

@@ -1,7 +1,7 @@
 package dm.balaev.Bookbooking.service.impl;
 
 import dm.balaev.Bookbooking.exceptions.ResourceNotFound;
-import dm.balaev.Bookbooking.payload.response.ApiResponse;
+import dm.balaev.Bookbooking.payload.response.ApplicationResponse;
 import dm.balaev.Bookbooking.persistance.entity.Account;
 import dm.balaev.Bookbooking.persistance.entity.Book;
 import dm.balaev.Bookbooking.persistance.entity.Reservation;
@@ -43,12 +43,12 @@ public class ReservationServiceImpl implements ReservationService{
 
     @Override
     @CacheEvict(value = "allReservations")
-    public ApiResponse cancelBookReservation(Long id) {
+    public ApplicationResponse cancelBookReservation(Long id) {
         Reservation reservation = reservationRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFound("Reservation not found with id: " + id));
 
         reservationRepository.delete(reservation);
-        return new ApiResponse("Reservation deleted");
+        return new ApplicationResponse("Reservation deleted");
     }
 
     @Override

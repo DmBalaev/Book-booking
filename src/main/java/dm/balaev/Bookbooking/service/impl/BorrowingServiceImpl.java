@@ -1,11 +1,10 @@
 package dm.balaev.Bookbooking.service.impl;
 
 import dm.balaev.Bookbooking.exceptions.*;
-import dm.balaev.Bookbooking.payload.response.ApiResponse;
+import dm.balaev.Bookbooking.payload.response.ApplicationResponse;
 import dm.balaev.Bookbooking.persistance.entity.Account;
 import dm.balaev.Bookbooking.persistance.entity.Book;
 import dm.balaev.Bookbooking.persistance.entity.Borrowing;
-import dm.balaev.Bookbooking.persistance.entity.Reservation;
 import dm.balaev.Bookbooking.persistance.repository.AccountRepository;
 import dm.balaev.Bookbooking.persistance.repository.BookRepository;
 import dm.balaev.Bookbooking.persistance.repository.BorrowingRepository;
@@ -67,7 +66,7 @@ public class BorrowingServiceImpl implements BorrowingService {
     }
 
     @Override
-    public ApiResponse returnBook(Long id) {
+    public ApplicationResponse returnBook(Long id) {
         Borrowing borrowing = borrowingRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFound("Borrowing not found with id: " + id));
 
@@ -78,7 +77,7 @@ public class BorrowingServiceImpl implements BorrowingService {
         borrowing.setReturned(true);
         borrowingRepository.save(borrowing);
 
-        return new ApiResponse("book returned");
+        return new ApplicationResponse("book returned");
     }
 
     @Override

@@ -2,7 +2,7 @@ package dm.balaev.Bookbooking.service.impl;
 
 import dm.balaev.Bookbooking.exceptions.DuplicateException;
 import dm.balaev.Bookbooking.exceptions.ResourceNotFound;
-import dm.balaev.Bookbooking.payload.response.ApiResponse;
+import dm.balaev.Bookbooking.payload.response.ApplicationResponse;
 import dm.balaev.Bookbooking.persistance.entity.Book;
 import dm.balaev.Bookbooking.persistance.repository.BookRepository;
 import dm.balaev.Bookbooking.service.BookService;
@@ -67,8 +67,8 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @CacheEvict(value = "books", allEntries = true)
-    public ApiResponse deleteBook(Long id) {
+    public ApplicationResponse deleteBook(Long id) {
         bookRepository.deleteById(id);
-        return new ApiResponse("You successfully delete book");
+        return new ApplicationResponse("You successfully delete book");
     }
 }

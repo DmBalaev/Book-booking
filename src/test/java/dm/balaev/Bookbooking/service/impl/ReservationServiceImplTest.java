@@ -1,7 +1,7 @@
 package dm.balaev.Bookbooking.service.impl;
 
 import dm.balaev.Bookbooking.exceptions.ResourceNotFound;
-import dm.balaev.Bookbooking.payload.response.ApiResponse;
+import dm.balaev.Bookbooking.payload.response.ApplicationResponse;
 import dm.balaev.Bookbooking.persistance.entity.Account;
 import dm.balaev.Bookbooking.persistance.entity.Book;
 import dm.balaev.Bookbooking.persistance.entity.Reservation;
@@ -107,7 +107,7 @@ class ReservationServiceImplTest {
 
         when(reservationRepository.findById(reservationId)).thenReturn(Optional.of(reservation));
 
-        ApiResponse response = reservationService.cancelBookReservation(reservationId);
+        ApplicationResponse response = reservationService.cancelBookReservation(reservationId);
 
         verify(reservationRepository).findById(reservationId);
         verify(reservationRepository).delete(reservation);

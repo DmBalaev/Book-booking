@@ -9,10 +9,10 @@ services:
       POSTGRES_DB: booking_db
     restart: unless-stopped
 
-  cache:
-    image: "redis"
+  redis:
+    image: 'redis:latest'
     ports:
-      - "1313:6379"
+        - '1313:6379'
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
       - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
@@ -22,7 +22,7 @@ services:
     container_name: booking-book-api
     depends_on:
       - db
-      - cache
+      - redis
     ports:
       - "8080:8080"
     restart: unless-stopped

@@ -1,7 +1,7 @@
 package dm.balaev.Bookbooking.service.impl;
 
 import dm.balaev.Bookbooking.exceptions.DuplicateException;
-import dm.balaev.Bookbooking.payload.response.ApiResponse;
+import dm.balaev.Bookbooking.payload.response.ApplicationResponse;
 import dm.balaev.Bookbooking.persistance.entity.Book;
 import dm.balaev.Bookbooking.persistance.repository.BookRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -148,7 +148,7 @@ class BookServiceImplTest {
     void testDeleteBook() {
         Long bookId = 1L;
 
-        ApiResponse result = bookService.deleteBook(bookId);
+        ApplicationResponse result = bookService.deleteBook(bookId);
 
         verify(bookRepository, times(1)).deleteById(bookId);
         assertNotNull(result);
