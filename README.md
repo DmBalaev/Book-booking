@@ -8,7 +8,6 @@
   - [Running with Docker](#docker)
   - [Running without Docker](#without_docker)
   - [Configuring Email Notifications](#configuring)
-  - 
   
 <a name="technologies"></a>
 ## Technologies
